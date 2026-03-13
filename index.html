@@ -30,30 +30,6 @@
       background: var(--charcoal);
       color: var(--off-white);
       overflow-x: hidden;
-      cursor: none;
-    }
-
-    /* Custom Cursor */
-    .cursor {
-      position: fixed;
-      width: 12px; height: 12px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s ease;
-      mix-blend-mode: difference;
-      opacity: 0;
-    }
-    .cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transition: all 0.15s ease;
-      opacity: 0;
     }
 
     /* ─── NAVBAR ─── */
@@ -369,7 +345,6 @@
       position: relative;
       height: 460px;
       overflow: hidden;
-      cursor: none;
     }
     .service-card img {
       width: 100%; height: 100%;
@@ -476,7 +451,7 @@
       gap: 4px;
     }
     .project-card {
-      position: relative; overflow: hidden; cursor: none;
+      position: relative; overflow: hidden;
     }
     .project-card.large { grid-row: span 2; }
     .project-card img {
@@ -702,9 +677,6 @@
   </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- ─── NAVBAR ─── -->
 <nav id="navbar">
@@ -1046,49 +1018,6 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  let cursorVisible = false;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    if (!cursorVisible) {
-      cursorVisible = true;
-      rx = mx;
-      ry = my;
-      cursor.style.opacity = '1';
-      ring.style.opacity = '0.5';
-    }
-  });
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-    ring.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', e => {
-    if (cursorVisible) {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.opacity = '1';
-      ring.style.opacity = '0.5';
-    }
-  });
-  function animateCursor() {
-    cursor.style.left = mx - 6 + 'px';
-    cursor.style.top = my - 6 + 'px';
-    rx += (mx - rx) * 0.18;
-    ry += (my - ry) * 0.18;
-    ring.style.left = rx - 18 + 'px';
-    ring.style.top = ry - 18 + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-  document.querySelectorAll('a, button, .service-card, .project-card').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; });
-    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
-  });
-
   // Navbar scroll
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
