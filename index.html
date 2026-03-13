@@ -43,6 +43,7 @@
       z-index: 9999;
       transition: transform 0.1s ease;
       mix-blend-mode: difference;
+      opacity: 0;
     }
     .cursor-ring {
       position: fixed;
@@ -52,7 +53,7 @@
       pointer-events: none;
       z-index: 9998;
       transition: all 0.15s ease;
-      opacity: 0.5;
+      opacity: 0;
     }
 
     /* ─── NAVBAR ─── */
@@ -1049,7 +1050,30 @@
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  let cursorVisible = false;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!cursorVisible) {
+      cursorVisible = true;
+      rx = mx;
+      ry = my;
+      cursor.style.opacity = '1';
+      ring.style.opacity = '0.5';
+    }
+  });
+  document.addEventListener('mouseleave', () => {
+    cursor.style.opacity = '0';
+    ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', e => {
+    if (cursorVisible) {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.opacity = '1';
+      ring.style.opacity = '0.5';
+    }
+  });
   function animateCursor() {
     cursor.style.left = mx - 6 + 'px';
     cursor.style.top = my - 6 + 'px';
